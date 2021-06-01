@@ -1,13 +1,34 @@
-sudo: false
-language: node_js
-node_js:
-  - 10 # use nodejs v10 LTS
-cache: npm
+$vim .travis.yml
+# 指定构建环境是Node.js，当前版本是稳定版
+anguage: node_js
+node_js: stable
+
+# 设置钩子只检测blog-source分支的push变动
 branches:
   only:
-    - main # build master branch only
+    - main
+
+# 设置缓存文件
+cache:
+  directories:
+    - node_modules
+
+#在构建之前安装hexo环境和主题，这里的主题就是原来修改过的主题，我将其托管到另一个github仓库，直接clone就行，否则每次都是新的主题，要重新设置。
+before_install:
+  - npm install -g hexo-cli
+
+#安装git插件和搜索功能插件
+install:
+  - npm install
+  - npm install hexo-deployer-git --save
+  - npm install hexo-generator-searchdb --save
+
+# 执行清缓存，生成网页操作
 script:
-  - hexo generate # generate static files
+  - hexo clean
+  - hexo generate
+
+# 设置git提交名，邮箱；替换真实token到_config.yml文件，最后depoy部署
 deploy:
   provider: pages
   skip-cleanup: true
