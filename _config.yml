@@ -104,8 +104,8 @@ theme: ayer
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:yangqinglei26/yangtest.git
-  branch: main
+  repo: https://gh_token@github.com/yangqinglei26/yangtest.git
+  branch: master
 # hexo-generator-searchdb
 search:
   path: search.xml
